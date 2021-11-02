@@ -1,7 +1,8 @@
 package com.github.rhaysamt.citiesapi.resources;
 
-import com.github.rhaysamt.citiesapi.repositories.CountryRepository;
 import com.github.rhaysamt.citiesapi.entities.CountryEntity;
+import com.github.rhaysamt.citiesapi.entities.StateEntity;
+import com.github.rhaysamt.citiesapi.repositories.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,28 +12,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/countries")
-public class CountryResource {
+@RequestMapping("/states")
+public class StateResource {
 
     @Autowired
-    private CountryRepository repository;
+    private StateRepository repository;
 
     @GetMapping
-    public Page<CountryEntity> allCountries(Pageable page) {
-        return repository.findAll(page);
+    public List<StateEntity> allStates() {
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
-        Optional<CountryEntity> optionalCountry = repository.findById(id);
+        Optional<StateEntity> optionalState = repository.findById(id);
 
-        if (optionalCountry.isPresent()) {
-            return ResponseEntity.ok().body(optionalCountry.get());
+        if (optionalState.isPresent()) {
+            return ResponseEntity.ok().body(optionalState.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
