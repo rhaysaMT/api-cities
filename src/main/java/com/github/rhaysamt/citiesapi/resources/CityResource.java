@@ -26,7 +26,7 @@ public class CityResource {
         return repository.findAll(page);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
         Optional<CityEntity> optionalCityEntity = repository.findById(id);
 
@@ -35,5 +35,10 @@ public class CityResource {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/name/{name}")
+    public CityEntity findByName(@PathVariable String name) {
+        return repository.findByName(name);
     }
 }
